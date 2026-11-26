@@ -1,0 +1,321 @@
+/* Values taken from the Figma frame "Desktop - 1" (1620 x 1646). */
+
+:root {
+  --bg: #232323;
+  --text: #ffffff;
+  --muted: #8d8d8d;
+  --badge-bg: #434343;
+
+  --font-heading: "Arapey", serif;
+  --font-body: "Kumbh Sans", sans-serif;
+
+  --column: 800px;    /* text column and divider width */
+  --breakout: 1200px; /* project cards run wider than the text column */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-variation-settings: "YOPQ" 300;
+  line-height: normal;
+  overflow-wrap: break-word;
+}
+
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+.page {
+  width: 100%;
+  max-width: calc(var(--breakout) + 48px);
+  margin: 0 auto;
+  padding: 114px 24px 397px;
+}
+
+/* Everything sits in the centered 800px column... */
+.page > * {
+  max-width: var(--column);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ...with text stopping at 796px, as in the Figma frame... */
+.page > section {
+  padding-right: 4px;
+}
+
+/* ...except the project cards, which break out to 1200px. */
+.page > .projects {
+  max-width: var(--breakout);
+  padding-right: 0;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ---------- About ---------- */
+
+.about__header {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.about__photo {
+  flex: none;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 29px;
+  padding: 0 8px;
+  border-radius: 31px;
+  background: var(--badge-bg);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.badge--figma {
+  padding-right: 7px;
+}
+
+.badge__icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+}
+
+.badge__icon--adobe {
+  transform: rotate(180deg) scaleY(-1);
+}
+
+.badge__icon--figma {
+  border-radius: 3px;
+}
+
+.about__text {
+  margin-top: 45px;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.about__text p + p {
+  margin-top: 25px;
+}
+
+/* ---------- Experience ---------- */
+
+.experience {
+  margin-top: 80px;
+}
+
+.entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 13px;
+  font-size: 22px;
+}
+
+.entry__text {
+  line-height: 1.36;
+}
+
+.entry__name,
+.entry__role {
+  display: block;
+}
+
+.entry__role,
+.entry__date {
+  color: var(--muted);
+}
+
+.entry__date {
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+/* ---------- Dividers ---------- */
+
+.divider {
+  width: 100%;
+  max-width: var(--column);
+  height: 3px;
+  transform: rotate(0.14deg);
+}
+
+.divider--after-experience {
+  margin-top: 26px;
+}
+
+.divider--after-projects {
+  margin-top: 29px;
+}
+
+/* ---------- Projects ---------- */
+
+.projects {
+  margin-top: 32px;
+}
+
+/* Each row sets --cols in the HTML from its images' proportions
+   (width / height), so every image in a row comes out the same height
+   and nothing is cropped. */
+.projects__grid {
+  display: grid;
+  grid-template-columns: var(--cols);
+  align-items: end; /* keeps the images level if one label wraps */
+  gap: 50px;
+  margin-top: 19px;
+}
+
+.projects__grid + .projects__grid {
+  margin-top: 50px;
+}
+
+.project__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  font-size: 22px;
+}
+
+.project__title {
+  font: inherit;
+}
+
+.project__client,
+.project__name,
+.project__type {
+  display: block;
+}
+
+.project__name,
+.project__type,
+.project__date {
+  color: var(--muted);
+}
+
+.project__type {
+  font-size: 20px;
+  font-weight: 300; /* Kumbh Sans Light */
+}
+
+.project__date {
+  white-space: nowrap;
+}
+
+.project__image {
+  width: 100%;
+  height: auto;
+  margin-top: 19px;
+  border-radius: 29px;
+}
+
+/* A series: several images under one project label, kept the same height. */
+.project__images {
+  display: grid;
+  grid-template-columns: var(--cols);
+  align-items: end;
+  gap: 24px;
+  margin-top: 19px;
+}
+
+.project__images .project__image {
+  margin-top: 0;
+}
+
+/* ---------- Contact ---------- */
+
+.contact {
+  margin-top: 32px;
+}
+
+.contact__details {
+  margin-top: 31px;
+  font-size: 20px;
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 700px) {
+  .page {
+    padding-top: 64px;
+    padding-bottom: 120px;
+  }
+
+  .page > section {
+    padding-right: 0;
+  }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .projects__grid + .projects__grid {
+    margin-top: 40px;
+  }
+
+  .project__images {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .entry {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .entry__date {
+    margin-top: 0;
+  }
+}

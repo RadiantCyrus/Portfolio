@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sawyer Nichols</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arapey&family=Kumbh+Sans:wght,YOPQ@300,300;400,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+
+    <section class="about" aria-label="About me">
+      <div class="about__header">
+        <img class="about__photo" src="assets/profile-picture.png" alt="Portrait of Sawyer Nichols" width="104" height="104">
+        <ul class="badges" aria-label="Tools">
+          <li class="badge">
+            <img class="badge__icon badge__icon--adobe" src="assets/adobe-icon.png" alt="" width="18" height="18">
+            <span>Photoshop , Illustrator , InDesign</span>
+          </li>
+          <li class="badge badge--figma">
+            <img class="badge__icon badge__icon--figma" src="assets/figma-icon.png" alt="" width="18" height="18">
+            <span>Figma</span>
+          </li>
+        </ul>
+      </div>
+      <div class="about__text">
+        <p>Hello I’m Sawyer, a student studying Visual Communications Design at Eastern Washington University. I currently work at EWU as a Graphics Assistant where I focus on helping others print and making graphics for the University.</p>
+        <p>I spend my off-hours Hiking, trail running, and documenting the world through photography.</p>
+      </div>
+    </section>
+
+    <section class="experience" aria-labelledby="experience-title">
+      <h2 class="section-title" id="experience-title">Experience</h2>
+      <div class="entry">
+        <p class="entry__text">
+          <span class="entry__name">Eastern Washington University</span>
+          <span class="entry__role">Graphic Design Assistant</span>
+        </p>
+        <p class="entry__date">2026 - Current</p>
+      </div>
+    </section>
+
+    <img class="divider divider--after-experience" src="assets/divider.svg" alt="">
+
+    <section class="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title">Projects</h2>
+      <!-- Projects run newest to oldest. Each --cols value is an image's width divided by its height, in the same order as the images. -->
+      <!-- Row 1: Discord poster series -->
+      <div class="projects__grid" style="--cols: minmax(0, 1fr)">
+        <article class="project">
+          <header class="project__header">
+            <h3 class="project__title">
+              <span class="project__client">Discord</span>
+              <span class="project__name">Wumpus Plush Relaunch</span>
+              <span class="project__type">Concept Project</span>
+            </h3>
+            <p class="project__date">Nov 2026</p>
+          </header>
+          <!-- A series: several images under one label. --cols works the same way as on the rows. -->
+          <div class="project__images" style="--cols: minmax(0, 0.718fr) minmax(0, 0.847fr) minmax(0, 0.718fr)">
+            <img class="project__image" src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254">
+            <img class="project__image" src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064">
+            <img class="project__image" src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
+          </div>
+        </article>
+      </div>
+      <!-- Row 2: On and Dbrand ads -->
+      <div class="projects__grid" style="--cols: minmax(0, 0.941fr) minmax(0, 1.174fr)">
+        <article class="project">
+          <header class="project__header">
+            <h3 class="project__title">
+              <span class="project__client">On.</span>
+              <span class="project__name">Cloudrunner 3</span>
+              <span class="project__type">Concept Project</span>
+            </h3>
+            <p class="project__date">July 2026</p>
+          </header>
+          <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000">
+        </article>
+        <article class="project">
+          <header class="project__header">
+            <h3 class="project__title">
+              <span class="project__client">Dbrand</span>
+              <span class="project__name">White Damascus</span>
+              <span class="project__type">Concept Project</span>
+            </h3>
+            <p class="project__date">July 2026</p>
+          </header>
+          <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1703">
+        </article>
+      </div>
+      <!-- Row 3: full-width spread -->
+      <div class="projects__grid" style="--cols: minmax(0, 1.546fr)">
+        <article class="project">
+          <header class="project__header">
+            <h3 class="project__title">
+              <span class="project__client">Porsche GT3RS</span>
+              <span class="project__name">Magazine Spread</span>
+              <span class="project__type">Personal Project</span>
+            </h3>
+            <p class="project__date">June 2026</p>
+          </header>
+          <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294">
+        </article>
+      </div>
+      <!-- Row 4: full-width spread -->
+      <div class="projects__grid" style="--cols: minmax(0, 1.546fr)">
+        <article class="project">
+          <header class="project__header">
+            <h3 class="project__title">
+              <span class="project__client">Aston Martin Valkyrie</span>
+              <span class="project__name">Magazine Spread</span>
+              <span class="project__type">Personal Project</span>
+            </h3>
+            <p class="project__date">June 2026</p>
+          </header>
+          <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294">
+        </article>
+      </div>
+    </section>
+
+    <img class="divider divider--after-projects" src="assets/divider.svg" alt="">
+
+    <section class="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Let’s Connect</h2>
+      <p class="contact__details">
+        <a href="mailto:Sawyernicholswork@gmail.com">Sawyernicholswork@gmail.com</a><br>
+        <a href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn: Sawyer Nichols</a>
+      </p>
+    </section>
+
+  </main>
+</body>
+</html>
