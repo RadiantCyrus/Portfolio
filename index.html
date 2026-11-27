@@ -191,5 +191,62 @@
       </button>
     </div>
   </main>
+  <!-- Scroll reveal: the Projects section stays hidden until the visitor
+       scrolls, then each piece jumps in with a slight wobble, once, and
+       stays visible. -->
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+
+      var items = Array.prototype.slice.call(document.querySelectorAll(
+        '.projects .section-title, .projects .project__header, .projects .project__zoom'
+      ));
+      if (!items.length) return;
+
+      var imageCount = 0;
+      items.forEach(function (el) {
+        var isImage = el.classList.contains('project__zoom');
+        el.classList.add('reveal', isImage ? 'reveal--pop' : 'reveal--rise');
+        // Neighbouring images wobble in opposite directions.
+        if (isImage) el.style.setProperty('--dir', imageCount++ % 2 ? 1 : -1);
+      });
+
+      // Show everything up to and including item `last`. Items that are
+      // on screen right now (`onScreen`) come in one after another.
+      function revealUpTo(last, onScreen) {
+        var step = 0;
+        for (var i = 0; i <= last; i++) {
+          var el = items[i];
+          if (el.classList.contains('is-visible')) continue;
+          var staggered = onScreen.indexOf(i) !== -1;
+          el.style.setProperty('--reveal-delay', staggered ? (step++ * 90) + 'ms' : '0ms');
+          el.classList.add('is-visible');
+          observer.unobserve(el);
+        }
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var onScreen = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .map(function (entry) { return items.indexOf(entry.target); })
+          .sort(function (a, b) { return a - b; });
+        if (onScreen.length) revealUpTo(onScreen[onScreen.length - 1], onScreen);
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+      function start() {
+        items.forEach(function (el) { observer.observe(el); });
+      }
+
+      // Wait for the first scroll, unless the page opened already scrolled.
+      if (window.scrollY > 4) start();
+      else window.addEventListener('scroll', start, { once: true, passive: true });
+
+      // Keyboard users: tabbing to a hidden image reveals it.
+      document.addEventListener('focusin', function (event) {
+        var el = event.target.closest && event.target.closest('.reveal');
+        if (el && !el.classList.contains('is-visible')) revealUpTo(items.indexOf(el), []);
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -355,6 +355,73 @@ html:has(.preview:popover-open) {
   }
 }
 
+/* ---------- Scroll reveal ----------
+   The script at the bottom of index.html adds these classes, so without
+   scripting nothing is ever hidden. Each item is revealed once and stays. */
+
+.reveal {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease-out var(--reveal-delay, 0ms),
+    transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) var(--reveal-delay, 0ms);
+}
+
+/* Images jump up and settle with a slight wobble: a faint squash and
+   stretch plus a half-degree rock that dies away in two swings.
+   --dir (1 or -1, set by the script) alternates which way each image
+   rocks first. Labels just rise into place. */
+@keyframes jiggle-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+  }
+  34% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.01, 1.014) rotate(calc(-0.5deg * var(--dir, 1)));
+  }
+  56% {
+    transform: translateY(2px) scale(1.01, 0.99) rotate(calc(0.35deg * var(--dir, 1)));
+  }
+  78% {
+    transform: translateY(-1px) scale(0.997, 1.004) rotate(calc(-0.15deg * var(--dir, 1)));
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal--pop {
+  transform: translateY(40px) scale(0.92);
+  transition: none;
+}
+
+.reveal--pop.is-visible {
+  animation: jiggle-pop 0.8s ease-in-out var(--reveal-delay, 0ms) both;
+}
+
+.reveal--rise {
+  transform: translateY(16px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal--pop.is-visible {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+    animation: none;
+  }
+}
+
 /* ---------- Contact ---------- */
 
 .contact {
