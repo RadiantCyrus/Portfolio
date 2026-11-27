@@ -61,9 +61,15 @@
           </header>
           <!-- A series: several images under one label. --cols works the same way as on the rows. -->
           <div class="project__images" style="--cols: minmax(0, 0.718fr) minmax(0, 0.847fr) minmax(0, 0.718fr)">
-            <img class="project__image" src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254">
-            <img class="project__image" src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064">
-            <img class="project__image" src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
+            <button class="project__zoom" type="button" popovertarget="preview-1" aria-label="Open larger preview. Discord poster: Wumpus is back!">
+              <img class="project__image" src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254">
+            </button>
+            <button class="project__zoom" type="button" popovertarget="preview-2" aria-label="Open larger preview. Discord poster: Wumpus is now back for order!">
+              <img class="project__image" src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064">
+            </button>
+            <button class="project__zoom" type="button" popovertarget="preview-3" aria-label="Open larger preview. Discord poster: Wumpus is back! repeated down a purple background.">
+              <img class="project__image" src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
+            </button>
           </div>
         </article>
       </div>
@@ -78,7 +84,9 @@
             </h3>
             <p class="project__date">July 2026</p>
           </header>
-          <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000">
+          <button class="project__zoom" type="button" popovertarget="preview-4" aria-label="Open larger preview. On Cloudrunner 3 ad: stability that keeps you running.">
+            <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000">
+          </button>
         </article>
         <article class="project">
           <header class="project__header">
@@ -89,7 +97,9 @@
             </h3>
             <p class="project__date">July 2026</p>
           </header>
-          <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1703">
+          <button class="project__zoom" type="button" popovertarget="preview-5" aria-label="Open larger preview. Dbrand ad introducing the White Damascus MacBook skin.">
+            <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1703">
+          </button>
         </article>
       </div>
       <!-- Row 3: full-width spread -->
@@ -103,7 +113,9 @@
             </h3>
             <p class="project__date">June 2026</p>
           </header>
-          <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294">
+          <button class="project__zoom" type="button" popovertarget="preview-6" aria-label="Open larger preview. Magazine spread about the Porsche 911 GT3 RS.">
+            <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294">
+          </button>
         </article>
       </div>
       <!-- Row 4: full-width spread -->
@@ -117,7 +129,9 @@
             </h3>
             <p class="project__date">June 2026</p>
           </header>
-          <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294">
+          <button class="project__zoom" type="button" popovertarget="preview-7" aria-label="Open larger preview. Magazine spread about the Aston Martin Valkyrie.">
+            <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294">
+          </button>
         </article>
       </div>
     </section>
@@ -132,6 +146,50 @@
       </p>
     </section>
 
+    <!-- Larger previews. Each one opens when its project image is clicked,
+         and closes on a click, a tap outside it, or the Esc key. -->
+    <div class="preview" id="preview-1" popover>
+      <button class="preview__close" type="button" popovertarget="preview-1" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-2" popover>
+      <button class="preview__close" type="button" popovertarget="preview-2" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-3" popover>
+      <button class="preview__close" type="button" popovertarget="preview-3" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-4" popover>
+      <button class="preview__close" type="button" popovertarget="preview-4" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-5" popover>
+      <button class="preview__close" type="button" popovertarget="preview-5" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1703" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-6" popover>
+      <button class="preview__close" type="button" popovertarget="preview-6" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
+    <div class="preview" id="preview-7" popover>
+      <button class="preview__close" type="button" popovertarget="preview-7" popovertargetaction="hide" aria-label="Close preview">
+        <img src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy">
+        <span class="preview__hint" aria-hidden="true">Close ✕</span>
+      </button>
+    </div>
   </main>
 </body>
 </html>

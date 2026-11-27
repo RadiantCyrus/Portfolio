@@ -253,11 +253,34 @@ a:focus-visible {
   white-space: nowrap;
 }
 
+/* Each image sits inside a button that opens its larger preview. */
+.project__zoom {
+  display: block;
+  width: 100%;
+  margin: 19px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 29px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+}
+
+.project__zoom:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
 .project__image {
   width: 100%;
   height: auto;
-  margin-top: 19px;
   border-radius: 29px;
+  transition: filter 0.15s ease;
+}
+
+.project__zoom:hover .project__image {
+  filter: brightness(1.08);
 }
 
 /* A series: several images under one project label, kept the same height. */
@@ -269,8 +292,67 @@ a:focus-visible {
   margin-top: 19px;
 }
 
-.project__images .project__image {
+.project__images .project__zoom {
   margin-top: 0;
+}
+
+/* ---------- Image previews ----------
+   Built on the browser's own popover feature, so there is no script:
+   the browser handles opening, Esc and clicking outside to close. */
+
+.preview {
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.preview::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+}
+
+.preview__close {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-out;
+}
+
+.preview__close img {
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 88vh;
+  max-height: 88dvh;
+  border-radius: 12px;
+}
+
+.preview__hint {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  padding: 6px 12px;
+  border-radius: 31px;
+  background: var(--badge-bg);
+  color: var(--text);
+  font-size: 13px;
+}
+
+/* Stop the page scrolling behind an open preview. */
+html:has(.preview:popover-open) {
+  overflow: hidden;
+}
+
+/* Browsers without popover support: keep the previews hidden. */
+@supports not selector(:popover-open) {
+  .preview {
+    display: none;
+  }
 }
 
 /* ---------- Contact ---------- */
