@@ -57,7 +57,7 @@ a:focus-visible {
   width: 100%;
   max-width: calc(var(--breakout) + 48px);
   margin: 0 auto;
-  padding: 114px 24px 397px;
+  padding: 114px 24px 56px;
 }
 
 /* Everything sits in the centered 800px column... */
@@ -89,6 +89,7 @@ a:focus-visible {
 
 .about__header {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: 14px;
 }
@@ -136,6 +137,41 @@ a:focus-visible {
 
 .badge__icon--figma {
   border-radius: 3px;
+}
+
+/* Quick contact links at the right end of the badge row. Outlined, so
+   they read as links and not as skill badges. */
+.contact-links {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  height: 29px;
+  padding: 0 14px;
+  border: 1px solid var(--muted);
+  border-radius: 31px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pill-link:hover,
+.pill-link:focus-visible {
+  border-color: var(--text);
+  text-decoration: none;
+}
+
+.pill-link--small {
+  height: 24px;
+  padding: 0 10px;
+  font-size: 11px;
 }
 
 .about__text {
@@ -433,12 +469,55 @@ html:has(.preview:popover-open) {
   font-size: 20px;
 }
 
+/* Each contact line is a row, so the Copy button sits beside the address
+   on a wide screen and tucks underneath it on a narrow one. */
+.contact__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+/* ---------- Footer ---------- */
+
+.divider--before-footer {
+  margin-top: 64px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.footer p:last-child {
+  max-width: 470px;
+}
+
 /* ---------- Smaller screens ---------- */
 
 @media (max-width: 700px) {
   .page {
     padding-top: 64px;
-    padding-bottom: 120px;
+    padding-bottom: 48px;
+  }
+
+  .contact-links {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .contact__row + .contact__row {
+    margin-top: 10px;
+  }
+
+  .footer p:last-child {
+    max-width: none;
   }
 
   .page > section {

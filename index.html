@@ -25,6 +25,10 @@
             <span>Figma</span>
           </li>
         </ul>
+        <div class="contact-links">
+          <a class="pill-link" href="mailto:Sawyernicholswork@gmail.com">Email</a>
+          <a class="pill-link" href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
       </div>
       <div class="about__text">
         <p>Hello I’m Sawyer, a student studying Visual Communications Design at Eastern Washington University. I currently work at EWU as a Graphics Assistant where I focus on helping others print and making graphics for the University.</p>
@@ -141,10 +145,17 @@
     <section class="contact" aria-labelledby="contact-title">
       <h2 class="section-title" id="contact-title">Let’s Connect</h2>
       <p class="contact__details">
-        <a href="mailto:Sawyernicholswork@gmail.com">Sawyernicholswork@gmail.com</a><br>
-        <a href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn: Sawyer Nichols</a>
+        <span class="contact__row"><a href="mailto:Sawyernicholswork@gmail.com">Sawyernicholswork@gmail.com</a><button class="pill-link pill-link--small" type="button" data-copy="Sawyernicholswork@gmail.com" hidden>Copy</button></span>
+        <span class="contact__row"><a href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn: Sawyer Nichols</a></span>
       </p>
     </section>
+
+    <img class="divider divider--before-footer" src="assets/divider.svg" alt="">
+
+    <footer class="footer">
+      <p>© 2026 Sawyer Nichols</p>
+      <p>Concept and personal projects are my own work and are not affiliated with or endorsed by the brands shown.</p>
+    </footer>
 
     <!-- Larger previews. Each one opens when its project image is clicked,
          and closes on a click, a tap outside it, or the Esc key. -->
@@ -192,8 +203,8 @@
     </div>
   </main>
   <!-- Scroll reveal: the Projects section stays hidden until the visitor
-       scrolls, then each piece jumps in with a slight wobble, once, and
-       stays visible. -->
+       scrolls to it, then every card jumps in together with a slight
+       wobble, once, and stays visible. -->
   <script>
     (function () {
       if (!('IntersectionObserver' in window)) return;
@@ -201,7 +212,8 @@
       var items = Array.prototype.slice.call(document.querySelectorAll(
         '.projects .section-title, .projects .project__header, .projects .project__zoom'
       ));
-      if (!items.length) return;
+      var firstImage = document.querySelector('.projects .project__zoom');
+      if (!items.length || !firstImage) return;
 
       var imageCount = 0;
       items.forEach(function (el) {
@@ -211,40 +223,66 @@
         if (isImage) el.style.setProperty('--dir', imageCount++ % 2 ? 1 : -1);
       });
 
-      // Show everything up to and including item `last`. Items that are
-      // on screen right now (`onScreen`) come in one after another.
-      function revealUpTo(last, onScreen) {
+      // Reveal the whole section in one go. Pieces on screen right now come
+      // in one after another; everything further down starts straight away,
+      // so it is already in place by the time the visitor gets there.
+      var done = false;
+      function revealAll() {
+        if (done) return;
+        done = true;
+        observer.disconnect();
         var step = 0;
-        for (var i = 0; i <= last; i++) {
-          var el = items[i];
-          if (el.classList.contains('is-visible')) continue;
-          var staggered = onScreen.indexOf(i) !== -1;
-          el.style.setProperty('--reveal-delay', staggered ? (step++ * 90) + 'ms' : '0ms');
+        var screenBottom = window.innerHeight;
+        items.forEach(function (el) {
+          var onScreen = el.getBoundingClientRect().top < screenBottom;
+          el.style.setProperty('--reveal-delay', onScreen ? (step++ * 90) + 'ms' : '0ms');
           el.classList.add('is-visible');
-          observer.unobserve(el);
-        }
+        });
       }
 
+      // Trigger once a project image starts to come into view. Normally that
+      // is the first one; it is a later one if the visitor jumped down the page.
       var observer = new IntersectionObserver(function (entries) {
-        var onScreen = entries
-          .filter(function (entry) { return entry.isIntersecting; })
-          .map(function (entry) { return items.indexOf(entry.target); })
-          .sort(function (a, b) { return a - b; });
-        if (onScreen.length) revealUpTo(onScreen[onScreen.length - 1], onScreen);
-      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+        if (entries.some(function (entry) { return entry.isIntersecting; })) revealAll();
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
 
       function start() {
-        items.forEach(function (el) { observer.observe(el); });
+        items.forEach(function (el) {
+          if (el.classList.contains('project__zoom')) observer.observe(el);
+        });
       }
 
       // Wait for the first scroll, unless the page opened already scrolled.
       if (window.scrollY > 4) start();
       else window.addEventListener('scroll', start, { once: true, passive: true });
 
-      // Keyboard users: tabbing to a hidden image reveals it.
+      // Keyboard users: tabbing into the section reveals it.
       document.addEventListener('focusin', function (event) {
-        var el = event.target.closest && event.target.closest('.reveal');
-        if (el && !el.classList.contains('is-visible')) revealUpTo(items.indexOf(el), []);
+        if (event.target.closest && event.target.closest('.reveal')) revealAll();
+      });
+    })();
+  </script>
+
+  <!-- Copy button: puts the email address on the clipboard. The button
+       stays hidden where the browser cannot copy. -->
+  <script>
+    (function () {
+      var button = document.querySelector('[data-copy]');
+      if (!button || !navigator.clipboard || !navigator.clipboard.writeText) return;
+
+      var label = button.textContent;
+      button.hidden = false;
+
+      function show(message) {
+        button.textContent = message;
+        setTimeout(function () { button.textContent = label; }, 2000);
+      }
+
+      button.addEventListener('click', function () {
+        navigator.clipboard.writeText(button.getAttribute('data-copy')).then(
+          function () { show('Copied ✓'); },
+          function () { show('Copy failed'); }
+        );
       });
     })();
   </script>
