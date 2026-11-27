@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sawyer Nichols</title>
+
   <!-- Favicon. Paths have no leading slash because the site is served
        from a subfolder (/Portfolio/) on GitHub Pages. -->
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
@@ -11,13 +12,15 @@
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
+
+  <!-- Fonts: Arapey for headings, Kumbh Sans (Light and Regular) for text. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Arapey&family=Kumbh+Sans:wght,YOPQ@300,300;400,300&display=swap" rel="stylesheet">
-  <!-- The ?v= number makes browsers fetch the stylesheet again. Raise it by
-       one whenever styles.css changes, so the page and its styles never
-       get out of step. -->
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arapey&family=Kumbh+Sans:wght,YOPQ@300,300;400,300&display=swap">
+
+  <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
+       fetch the new stylesheet instead of reusing a saved copy. -->
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <main class="page">
@@ -57,9 +60,14 @@
 
     <section class="projects" aria-labelledby="projects-title">
       <h2 class="section-title" id="projects-title">Projects</h2>
-      <!-- Projects run newest to oldest. Each --cols value is an image's width divided by its height, in the same order as the images. -->
-      <!-- Row 1: Discord poster series -->
-      <div class="projects__grid" style="--cols: minmax(0, 1fr)">
+
+      <!-- Projects run newest to oldest, one row per projects__grid.
+           A row with more than one image sets --cols: one value per image,
+           in order, each being that image's width divided by its height.
+           That keeps every image in the row the same height. -->
+
+      <!-- Row 1: Discord poster series (three images under one label) -->
+      <div class="projects__grid">
         <article class="project">
           <header class="project__header">
             <h3 class="project__title">
@@ -69,7 +77,6 @@
             </h3>
             <p class="project__date">Nov 2026</p>
           </header>
-          <!-- A series: several images under one label. --cols works the same way as on the rows. -->
           <div class="project__images" style="--cols: minmax(0, 0.718fr) minmax(0, 0.847fr) minmax(0, 0.718fr)">
             <button class="project__zoom" type="button" popovertarget="preview-1" aria-label="Open larger preview. Discord poster: Wumpus is back!">
               <img class="project__image" src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254">
@@ -83,6 +90,7 @@
           </div>
         </article>
       </div>
+
       <!-- Row 2: On and Dbrand ads -->
       <div class="projects__grid" style="--cols: minmax(0, 0.941fr) minmax(0, 1.174fr)">
         <article class="project">
@@ -112,8 +120,9 @@
           </button>
         </article>
       </div>
-      <!-- Row 3: full-width spread -->
-      <div class="projects__grid" style="--cols: minmax(0, 1.546fr)">
+
+      <!-- Row 3: Porsche spread, full width -->
+      <div class="projects__grid">
         <article class="project">
           <header class="project__header">
             <h3 class="project__title">
@@ -128,8 +137,9 @@
           </button>
         </article>
       </div>
-      <!-- Row 4: full-width spread -->
-      <div class="projects__grid" style="--cols: minmax(0, 1.546fr)">
+
+      <!-- Row 4: Aston Martin spread, full width -->
+      <div class="projects__grid">
         <article class="project">
           <header class="project__header">
             <h3 class="project__title">
@@ -150,66 +160,76 @@
 
     <section class="contact" aria-labelledby="contact-title">
       <h2 class="section-title" id="contact-title">Let’s Connect</h2>
-      <p class="contact__details">
-        <span class="contact__row"><a href="mailto:Sawyernicholswork@gmail.com">Sawyernicholswork@gmail.com</a><button class="pill-link pill-link--small" type="button" data-copy="Sawyernicholswork@gmail.com" hidden>Copy</button></span>
-        <span class="contact__row"><a href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn: Sawyer Nichols</a></span>
-      </p>
+      <ul class="contact__details">
+        <li class="contact__row">
+          <a href="mailto:Sawyernicholswork@gmail.com">Sawyernicholswork@gmail.com</a>
+          <!-- Hidden until the script confirms the browser can copy. -->
+          <button class="copy-button" type="button" data-copy="Sawyernicholswork@gmail.com" hidden>Copy</button>
+        </li>
+        <li class="contact__row">
+          <a href="https://www.linkedin.com/in/sawyer-nichols-5863b9374/" target="_blank" rel="noopener noreferrer">LinkedIn: Sawyer Nichols</a>
+        </li>
+      </ul>
     </section>
 
     <footer class="footer">
       <p>© 2026 Sawyer Nichols</p>
-      <p>Concept and personal projects are my own work and are not affiliated with or endorsed by the brands shown.</p>
+      <p class="footer__note">Concept and personal projects are my own work and are not affiliated with or endorsed by the brands shown.</p>
     </footer>
 
-    <!-- Larger previews. Each one opens when its project image is clicked,
-         and closes on a click, a tap outside it, or the Esc key. -->
-    <div class="preview" id="preview-1" popover>
-      <button class="preview__close" type="button" popovertarget="preview-1" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-2" popover>
-      <button class="preview__close" type="button" popovertarget="preview-2" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-3" popover>
-      <button class="preview__close" type="button" popovertarget="preview-3" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-4" popover>
-      <button class="preview__close" type="button" popovertarget="preview-4" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-5" popover>
-      <button class="preview__close" type="button" popovertarget="preview-5" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-6" popover>
-      <button class="preview__close" type="button" popovertarget="preview-6" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
-    <div class="preview" id="preview-7" popover>
-      <button class="preview__close" type="button" popovertarget="preview-7" popovertargetaction="hide" aria-label="Close preview">
-        <img src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy">
-        <span class="preview__hint" aria-hidden="true">Close ✕</span>
-      </button>
-    </div>
   </main>
-  <!-- Scroll reveal: the Projects section stays hidden until the visitor
-       scrolls to it, then every card jumps in together with a slight
-       wobble, once, and stays visible. -->
+
+  <!-- Larger previews. Each one opens when its project image is clicked,
+       and closes on a click, a tap outside it, or the Esc key. -->
+  <div class="preview" id="preview-1" popover>
+    <button class="preview__close" type="button" popovertarget="preview-1" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-2" popover>
+    <button class="preview__close" type="button" popovertarget="preview-2" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-3" popover>
+    <button class="preview__close" type="button" popovertarget="preview-3" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-4" popover>
+    <button class="preview__close" type="button" popovertarget="preview-4" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-5" popover>
+    <button class="preview__close" type="button" popovertarget="preview-5" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-6" popover>
+    <button class="preview__close" type="button" popovertarget="preview-6" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+  <div class="preview" id="preview-7" popover>
+    <button class="preview__close" type="button" popovertarget="preview-7" popovertargetaction="hide" aria-label="Close preview">
+      <img src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy">
+      <span class="preview__hint" aria-hidden="true">Close ✕</span>
+    </button>
+  </div>
+
+  <!-- Kept in the page, not in a separate file, so the reveal can hide the
+       Projects section before the browser first draws it. -->
   <script>
+    // Scroll reveal: the Projects section stays hidden until the visitor
+    // scrolls to it, then every card jumps in together with a slight
+    // wobble, once, and stays visible.
     (function () {
       if (!('IntersectionObserver' in window)) return;
 
@@ -265,11 +285,9 @@
         if (event.target.closest && event.target.closest('.reveal')) revealAll();
       });
     })();
-  </script>
 
-  <!-- Copy button: puts the email address on the clipboard. The button
-       stays hidden where the browser cannot copy. -->
-  <script>
+    // Copy button: puts the email address on the clipboard. The button
+    // stays hidden where the browser cannot copy.
     (function () {
       var button = document.querySelector('[data-copy]');
       if (!button || !navigator.clipboard || !navigator.clipboard.writeText) return;
