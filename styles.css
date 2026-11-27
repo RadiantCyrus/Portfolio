@@ -89,7 +89,6 @@ a:focus-visible {
 
 .about__header {
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-end;
   gap: 14px;
 }
@@ -139,14 +138,7 @@ a:focus-visible {
   border-radius: 3px;
 }
 
-/* Quick contact links at the right end of the badge row. Outlined, so
-   they read as links and not as skill badges. */
-.contact-links {
-  display: flex;
-  gap: 8px;
-  margin-left: auto;
-}
-
+/* Outlined pill, used for the Copy button. */
 .pill-link {
   display: inline-flex;
   align-items: center;
@@ -501,11 +493,6 @@ html:has(.preview:popover-open) {
   .page {
     padding-top: 64px;
     padding-bottom: 48px;
-  }
-
-  .contact-links {
-    width: 100%;
-    margin-left: 0;
   }
 
   .contact__row + .contact__row {
