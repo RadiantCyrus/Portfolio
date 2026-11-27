@@ -480,16 +480,12 @@ html:has(.preview:popover-open) {
 
 /* ---------- Footer ---------- */
 
-.divider--before-footer {
-  margin-top: 64px;
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 32px;
-  margin-top: 24px;
+  margin-top: 72px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
