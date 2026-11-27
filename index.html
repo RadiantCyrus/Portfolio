@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sawyer Nichols</title>
+  <title>Sawyer Nichols · Design Portfolio</title>
   <meta name="description" content="Portfolio of Sawyer Nichols, a Visual Communications Design student at Eastern Washington University. Advertising, poster and editorial projects.">
   <link rel="canonical" href="https://sawyernichols.org/">
 
@@ -21,13 +21,27 @@
   <meta property="og:image:alt" content="Sawyer Nichols, Visual Communications Design, beside five overlapping project prints.">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Favicon. Paths have no leading slash, so they work whichever
-       address the site is served from. -->
-  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+  <!-- Tells search engines who this site is about. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sawyer Nichols",
+    "url": "https://sawyernichols.org/",
+    "image": "https://sawyernichols.org/assets/profile-picture.png",
+    "description": "Visual Communications Design student at Eastern Washington University.",
+    "jobTitle": "Graphics Assistant",
+    "worksFor": { "@type": "CollegeOrUniversity", "name": "Eastern Washington University" },
+    "sameAs": ["https://www.linkedin.com/in/sawyer-nichols-5863b9374/"]
+  }
+  </script>
+
+  <!-- Favicon. All of its files live in the favicon folder. -->
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
 
   <!-- Fonts: Arapey for headings, Kumbh Sans (Light and Regular) for text. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,18 +50,21 @@
 
   <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
        fetch the new stylesheet instead of reusing a saved copy. -->
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <main class="page">
 
     <section class="about" aria-label="About me">
+      <!-- The page's main heading, for search engines and screen readers.
+           Hidden visually, so the design is unchanged. -->
+      <h1 class="visually-hidden">Sawyer Nichols</h1>
       <div class="about__header">
         <img class="about__photo" src="assets/profile-picture.png" alt="Portrait of Sawyer Nichols" width="104" height="104">
         <ul class="badges" aria-label="Tools">
           <li class="badge">
             <img class="badge__icon badge__icon--adobe" src="assets/adobe-icon.png" alt="" width="18" height="18">
-            <span>Photoshop , Illustrator , InDesign</span>
+            <span>Photoshop, Illustrator, InDesign</span>
           </li>
           <li class="badge badge--figma">
             <img class="badge__icon badge__icon--figma" src="assets/figma-icon.png" alt="" width="18" height="18">
@@ -56,8 +73,8 @@
         </ul>
       </div>
       <div class="about__text">
-        <p>Hello I’m Sawyer, a student studying Visual Communications Design at Eastern Washington University. I currently work at EWU as a Graphics Assistant where I focus on helping others print and making graphics for the University.</p>
-        <p>I spend my off-hours Hiking, trail running, and documenting the world through photography.</p>
+        <p>Hello, I’m Sawyer, a student studying Visual Communications Design at Eastern Washington University. I currently work at EWU as a Graphics Assistant where I focus on helping others print and making graphics for the University.</p>
+        <p>I spend my off-hours hiking, trail running, and documenting the world through photography.</p>
       </div>
     </section>
 
@@ -68,7 +85,7 @@
           <span class="entry__name">Eastern Washington University</span>
           <span class="entry__role">Graphics Assistant</span>
         </p>
-        <p class="entry__date">2026 - Current</p>
+        <p class="entry__date">2026 – Current</p>
       </div>
     </section>
 
@@ -95,13 +112,13 @@
           </header>
           <div class="project__images" style="--cols: minmax(0, 0.718fr) minmax(0, 0.847fr) minmax(0, 0.718fr)">
             <button class="project__zoom" type="button" popovertarget="preview-1" aria-label="Open larger preview. Discord poster: Wumpus is back!">
-              <img class="project__image" src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254">
+              <img class="project__image" src="assets/project-discord-wumpus.webp" alt="Discord poster: Wumpus is back!" width="900" height="1254">
             </button>
             <button class="project__zoom" type="button" popovertarget="preview-2" aria-label="Open larger preview. Discord poster: Wumpus is now back for order!">
               <img class="project__image" src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064">
             </button>
             <button class="project__zoom" type="button" popovertarget="preview-3" aria-label="Open larger preview. Discord poster: Wumpus is back! repeated down a purple background.">
-              <img class="project__image" src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
+              <img class="project__image" src="assets/project-discord-wumpus-3.webp" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
             </button>
           </div>
         </article>
@@ -119,7 +136,7 @@
             <p class="project__date">July 2026</p>
           </header>
           <button class="project__zoom" type="button" popovertarget="preview-4" aria-label="Open larger preview. On Cloudrunner 3 ad: stability that keeps you running.">
-            <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000">
+            <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy" decoding="async">
           </button>
         </article>
         <article class="project">
@@ -132,7 +149,7 @@
             <p class="project__date">July 2026</p>
           </header>
           <button class="project__zoom" type="button" popovertarget="preview-5" aria-label="Open larger preview. Dbrand ad introducing the White Damascus MacBook skin.">
-            <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704">
+            <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704" loading="lazy" decoding="async">
           </button>
         </article>
       </div>
@@ -142,14 +159,14 @@
         <article class="project">
           <header class="project__header">
             <h3 class="project__title">
-              <span class="project__client">Porsche GT3RS</span>
+              <span class="project__client">Porsche 911 GT3 RS</span>
               <span class="project__name">Magazine Spread</span>
               <span class="project__type">Personal Project</span>
             </h3>
             <p class="project__date">June 2026</p>
           </header>
           <button class="project__zoom" type="button" popovertarget="preview-6" aria-label="Open larger preview. Magazine spread about the Porsche 911 GT3 RS.">
-            <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294">
+            <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy" decoding="async">
           </button>
         </article>
       </div>
@@ -166,7 +183,7 @@
             <p class="project__date">June 2026</p>
           </header>
           <button class="project__zoom" type="button" popovertarget="preview-7" aria-label="Open larger preview. Magazine spread about the Aston Martin Valkyrie.">
-            <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294">
+            <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy" decoding="async">
           </button>
         </article>
       </div>
@@ -199,7 +216,7 @@
        and closes on a click, a tap outside it, or the Esc key. -->
   <div class="preview" id="preview-1" popover>
     <button class="preview__close" type="button" popovertarget="preview-1" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-discord-wumpus.png" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
+      <img src="assets/project-discord-wumpus.webp" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
       <span class="preview__hint" aria-hidden="true">Close ✕</span>
     </button>
   </div>
@@ -211,7 +228,7 @@
   </div>
   <div class="preview" id="preview-3" popover>
     <button class="preview__close" type="button" popovertarget="preview-3" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-discord-wumpus-3.png" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
+      <img src="assets/project-discord-wumpus-3.webp" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
       <span class="preview__hint" aria-hidden="true">Close ✕</span>
     </button>
   </div>
