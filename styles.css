@@ -328,19 +328,32 @@ a:focus-visible {
   width: 100%;
   height: auto;
   border-radius: 29px;
-  transition: filter 0.15s ease;
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.15s ease;
 }
 
 .project__zoom:hover .project__image {
   filter: brightness(1.08);
 }
 
+/* Under the pointer an image rocks slightly, the same half-degree rock it
+   arrives with. --dir is set by the script and alternates per image. The
+   tilt goes on the image, not its button: the button carries the
+   scroll-reveal animation. Only for devices with a pointer. */
+@media (hover: hover) {
+  .project__zoom:hover .project__image,
+  .project__zoom:focus-visible .project__image {
+    transform: scale(1.018) rotate(calc(-0.7deg * var(--dir, 1)));
+  }
+}
+
 /* ---------- Image preview ----------
    One window (a <dialog>) for every project image: the image on the left,
    with an arrow either side when there are more to step through, and a
    card on the right with its label, date and description. The
-   script at the bottom of index.html fills it in and opens it; the
-   browser handles the Esc key and keeping focus inside. */
+   script at the bottom of index.html fills it in, opens it and moves the
+   image in and out; the browser keeps focus inside. */
 
 .preview {
   position: fixed;
@@ -359,6 +372,24 @@ a:focus-visible {
 
 .preview::backdrop {
   background: rgba(0, 0, 0, 0.92);
+}
+
+/* The dark layer fades in and out instead of snapping. The script adds
+   these classes, and only for visitors who have not asked for less motion. */
+.preview--opening::backdrop {
+  animation: preview-dim 0.35s ease-out both;
+}
+
+.preview--closing::backdrop {
+  animation: preview-undim 0.26s ease-in both;
+}
+
+@keyframes preview-dim {
+  from { background: rgba(0, 0, 0, 0); }
+}
+
+@keyframes preview-undim {
+  to { background: rgba(0, 0, 0, 0); }
 }
 
 /* Stop the page scrolling behind an open preview. */
@@ -405,6 +436,16 @@ html:has(.preview[open]) {
   max-height: calc(100vh - 80px);
   max-height: calc(100dvh - 80px);
   border-radius: 12px;
+}
+
+/* While stepping, a copy of the outgoing image is laid exactly over the
+   real one (the script sets its place and size) and slides away. */
+.preview__ghost {
+  position: fixed;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  pointer-events: none;
 }
 
 /* Previous and Next, one either side of the image. */
@@ -663,6 +704,15 @@ html:has(.preview[open]) {
     pointer-events: auto;
     transition: none;
     animation: none;
+  }
+
+  .project__image {
+    transition: none;
+  }
+
+  .project__zoom:hover .project__image,
+  .project__zoom:focus-visible .project__image {
+    transform: none;
   }
 }
 

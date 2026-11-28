@@ -50,7 +50,7 @@
 
   <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
        fetch the new stylesheet instead of reusing a saved copy. -->
-  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
   <main class="page">
@@ -377,6 +377,10 @@
     // with that image, its label and its group's description. Images that
     // share a data-group can be stepped through with the arrows beside the
     // image, the arrow keys, or a swipe.
+    //
+    // Motion: the image grows out of the small one on the page and shrinks
+    // back into it on closing, and stepping slides one image out while the
+    // next slides in. Visitors who ask for less motion get none of it.
     (function () {
       var dialog = document.getElementById('preview');
       var notes = document.getElementById('project-notes');
@@ -386,6 +390,8 @@
       var image = part('image');
       var stage = part('stage');
       var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var moves = !calm && !!image.animate && !!dialog.getAnimations;
+      var SOFT = 'cubic-bezier(0.22, 1, 0.36, 1)'; // quick start, gentle stop
 
       // Collect the images into their groups, in page order.
       var groups = {};
@@ -398,6 +404,7 @@
         var list = groups[name] = groups[name] || [];
         var index = list.length;
         list.push({
+          thumb: picture,
           src: picture.getAttribute('src'),
           alt: picture.getAttribute('alt'),
           ratio: picture.getAttribute('width') / picture.getAttribute('height'),
@@ -411,6 +418,9 @@
 
       var items = [];
       var current = 0;
+      var closing = false;
+      var run = 0;       // goes up each time the image changes, so a late callback can tell
+      var hidden = null; // the small image hidden while the large one flies to or from it
 
       function open(name, index) {
         items = groups[name];
@@ -428,21 +438,70 @@
         // Fetch the rest of the group now, so Next is instant.
         items.forEach(function (item) { new Image().src = item.src; });
 
-        show(index, true);
+        show(index, 0);
         dialog.showModal();
         part('info').scrollTop = 0;
         part('layout').scrollTop = 0;
+        if (moves) arrive();
       }
 
-      // Stepping past either end wraps round to the other.
-      function show(index, instant) {
+      // Put the image back to rest and show the small image again.
+      function rest() {
+        image.style.opacity = '';
+        image.style.transformOrigin = '';
+        if (hidden) hidden.style.visibility = '';
+        hidden = null;
+      }
+
+      // Stop anything still moving, so quick clicks never pile up.
+      function settle() {
+        run++;
+        Array.prototype.forEach.call(dialog.querySelectorAll('.preview__ghost'), function (ghost) {
+          ghost.parentNode.removeChild(ghost);
+        });
+        image.getAnimations().forEach(function (animation) { animation.cancel(); });
+        rest();
+      }
+
+      // Stepping past either end wraps round to the other. direction is 1
+      // for the next image, -1 for the previous one and 0 for no movement.
+      function show(index, direction) {
         current = (index + items.length) % items.length;
         var item = items[current];
+        var ghost = null;
+
+        if (moves) {
+          settle();
+          if (direction) {
+            // A copy of the outgoing image, laid exactly over the real one,
+            // so the two can move at the same time.
+            var box = image.getBoundingClientRect();
+            ghost = image.cloneNode();
+            ghost.className = 'preview__image preview__ghost';
+            ghost.alt = '';
+            ghost.setAttribute('aria-hidden', 'true');
+            ghost.style.left = box.left + 'px';
+            ghost.style.top = box.top + 'px';
+            ghost.style.width = box.width + 'px';
+            ghost.style.height = box.height + 'px';
+            image.parentNode.appendChild(ghost);
+          }
+        }
 
         image.src = item.src;
         image.alt = item.alt;
-        if (!instant && !calm && image.animate) {
-          image.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+
+        if (ghost) {
+          ghost.animate(
+            [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(' + (-56 * direction) + 'px)' }],
+            { duration: 220, easing: 'ease-in', fill: 'forwards' }
+          ).onfinish = function () {
+            if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
+          };
+          image.animate(
+            [{ opacity: 0, transform: 'translateX(' + (56 * direction) + 'px)' }, { opacity: 1, transform: 'none' }],
+            { duration: 420, easing: SOFT }
+          );
         }
 
         part('client').textContent = item.client;
@@ -452,21 +511,138 @@
         part('count').textContent = (current + 1) + ' / ' + items.length;
       }
 
+      // Where the large image has to start (or end) to sit exactly on the
+      // small one on the page. Measured from the small image's button,
+      // because the image itself may be tilted by the pointer.
+      function flight(thumb) {
+        var from = thumb.parentNode.getBoundingClientRect();
+        var to = image.getBoundingClientRect();
+        if (!from.width || !to.width) return null;
+        if (from.bottom < 0 || from.top > window.innerHeight) return null; // scrolled out of view
+        var scale = from.width / to.width;
+        return {
+          transform: 'translate(' + (from.left - to.left) + 'px, ' + (from.top - to.top) + 'px) ' +
+            'scale(' + scale + ', ' + (from.height / to.height) + ')',
+          borderRadius: (parseFloat(getComputedStyle(thumb).borderRadius) / scale) + 'px'
+        };
+      }
+
+      function others() {
+        return [part('info')].concat(Array.prototype.slice.call(
+          dialog.querySelectorAll('.preview__arrow, .preview__count, .preview__close')
+        ));
+      }
+
+      // Opening: the dark layer fades in (see styles.css), the image grows
+      // out of the small one, then the card and the buttons follow.
+      function arrive() {
+        var thumb = items[current].thumb;
+        var id = run;
+
+        dialog.classList.remove('preview--closing');
+        dialog.classList.add('preview--opening');
+
+        others().forEach(function (el, i) {
+          el.animate(
+            i ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: 'translateX(24px)' }, { opacity: 1, transform: 'none' }],
+            { duration: i ? 300 : 460, delay: i ? 200 : 150, easing: i ? 'ease' : SOFT, fill: 'backwards' }
+          );
+        });
+
+        // Wait until the image has its size before measuring the flight.
+        image.style.opacity = '0';
+        var go = function () {
+          if (id !== run || !dialog.open) return;
+          image.style.opacity = '';
+          var start = flight(thumb);
+          if (!start) {
+            image.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease-out' });
+            return;
+          }
+          image.style.transformOrigin = '0 0';
+          hidden = thumb;
+          thumb.style.visibility = 'hidden';
+          image.animate(
+            [start, { transform: 'none', borderRadius: getComputedStyle(image).borderRadius }],
+            { duration: 480, easing: SOFT }
+          ).onfinish = function () {
+            if (id === run) rest();
+          };
+        };
+        (image.decode ? image.decode() : Promise.resolve()).then(go, go);
+      }
+
+      // Closing: the same in reverse. If the small image has scrolled out
+      // of view, the large one fades out instead.
+      function close() {
+        if (closing) return;
+        if (!moves) { dialog.close(); return; }
+
+        closing = true;
+        settle();
+        dialog.classList.remove('preview--opening');
+        dialog.classList.add('preview--closing');
+
+        others().forEach(function (el) {
+          el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' });
+        });
+
+        var thumb = items[current].thumb;
+        var end = flight(thumb);
+        var leave;
+        if (end) {
+          image.style.transformOrigin = '0 0';
+          hidden = thumb;
+          thumb.style.visibility = 'hidden';
+          leave = image.animate(
+            [{ transform: 'none', borderRadius: getComputedStyle(image).borderRadius }, end],
+            { duration: 340, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' }
+          );
+        } else {
+          leave = image.animate(
+            [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(0.98)' }],
+            { duration: 220, easing: 'ease-in', fill: 'forwards' }
+          );
+        }
+
+        var finished = false;
+        var finish = function () {
+          if (finished) return;
+          finished = true;
+          dialog.close();
+          dialog.classList.remove('preview--closing');
+          dialog.getAnimations({ subtree: true }).forEach(function (animation) { animation.cancel(); });
+          rest();
+          closing = false;
+        };
+        leave.onfinish = finish;
+        setTimeout(finish, 700); // in case the browser never reports the end
+      }
+
       dialog.addEventListener('click', function (event) {
-        var step = event.target.closest('[data-step]');
-        if (step) {
-          show(current + Number(step.getAttribute('data-step')));
+        if (closing) return;
+        var arrow = event.target.closest('[data-step]');
+        if (arrow) {
+          var step = Number(arrow.getAttribute('data-step'));
+          show(current + step, step);
           return;
         }
         // Anything that is not the image or the card closes the preview:
         // the Close button and the dark area around the image.
-        if (!event.target.closest('.preview__image, .preview__info')) dialog.close();
+        if (!event.target.closest('.preview__image, .preview__info')) close();
+      });
+
+      // The Esc key takes the same way out.
+      dialog.addEventListener('cancel', function (event) {
+        if (!moves) return;
+        event.preventDefault();
+        close();
       });
 
       dialog.addEventListener('keydown', function (event) {
-        if (items.length < 2) return;
-        if (event.key === 'ArrowRight') show(current + 1);
-        if (event.key === 'ArrowLeft') show(current - 1);
+        if (closing || items.length < 2) return;
+        if (event.key === 'ArrowRight') show(current + 1, 1);
+        if (event.key === 'ArrowLeft') show(current - 1, -1);
       });
 
       var touchX = null;
@@ -474,10 +650,13 @@
         touchX = event.touches[0].clientX;
       }, { passive: true });
       stage.addEventListener('touchend', function (event) {
-        if (touchX === null || items.length < 2) return;
+        if (touchX === null || closing || items.length < 2) return;
         var moved = event.changedTouches[0].clientX - touchX;
         touchX = null;
-        if (Math.abs(moved) > 40) show(current + (moved < 0 ? 1 : -1));
+        if (Math.abs(moved) > 40) {
+          var step = moved < 0 ? 1 : -1;
+          show(current + step, step);
+        }
       }, { passive: true });
     })();
   </script>
