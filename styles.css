@@ -234,8 +234,10 @@ a:focus-visible {
 /* ---------- Education ----------
    Uses the same .entry rows as Experience. */
 
+/* A little more than the 40px used between other sections, so the break
+   reads clearly against the 20px between the two schools. */
 .education {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .entry + .entry {
