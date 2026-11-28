@@ -50,7 +50,7 @@
 
   <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
        fetch the new stylesheet instead of reusing a saved copy. -->
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <main class="page">
@@ -111,13 +111,13 @@
             <p class="project__date">Nov 2026</p>
           </header>
           <div class="project__images" style="--cols: minmax(0, 0.718fr) minmax(0, 0.847fr) minmax(0, 0.718fr)">
-            <button class="project__zoom" type="button" popovertarget="preview-1" aria-label="Open larger preview. Discord poster: Wumpus is back!">
+            <button class="project__zoom" type="button" data-group="wumpus" aria-haspopup="dialog" aria-label="Open larger preview. Discord poster: Wumpus is back!">
               <img class="project__image" src="assets/project-discord-wumpus.webp" alt="Discord poster: Wumpus is back!" width="900" height="1254">
             </button>
-            <button class="project__zoom" type="button" popovertarget="preview-2" aria-label="Open larger preview. Discord poster: Wumpus is now back for order!">
+            <button class="project__zoom" type="button" data-group="wumpus" aria-haspopup="dialog" aria-label="Open larger preview. Discord poster: Wumpus is now back for order!">
               <img class="project__image" src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064">
             </button>
-            <button class="project__zoom" type="button" popovertarget="preview-3" aria-label="Open larger preview. Discord poster: Wumpus is back! repeated down a purple background.">
+            <button class="project__zoom" type="button" data-group="wumpus" aria-haspopup="dialog" aria-label="Open larger preview. Discord poster: Wumpus is back! repeated down a purple background.">
               <img class="project__image" src="assets/project-discord-wumpus-3.webp" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254">
             </button>
           </div>
@@ -135,7 +135,7 @@
             </h3>
             <p class="project__date">July 2026</p>
           </header>
-          <button class="project__zoom" type="button" popovertarget="preview-4" aria-label="Open larger preview. On Cloudrunner 3 ad: stability that keeps you running.">
+          <button class="project__zoom" type="button" data-group="on" aria-haspopup="dialog" aria-label="Open larger preview. On Cloudrunner 3 ad: stability that keeps you running.">
             <img class="project__image" src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy" decoding="async">
           </button>
         </article>
@@ -148,7 +148,7 @@
             </h3>
             <p class="project__date">July 2026</p>
           </header>
-          <button class="project__zoom" type="button" popovertarget="preview-5" aria-label="Open larger preview. Dbrand ad introducing the White Damascus MacBook skin.">
+          <button class="project__zoom" type="button" data-group="dbrand" aria-haspopup="dialog" aria-label="Open larger preview. Dbrand ad introducing the White Damascus MacBook skin.">
             <img class="project__image" src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704" loading="lazy" decoding="async">
           </button>
         </article>
@@ -165,7 +165,7 @@
             </h3>
             <p class="project__date">June 2026</p>
           </header>
-          <button class="project__zoom" type="button" popovertarget="preview-6" aria-label="Open larger preview. Magazine spread about the Porsche 911 GT3 RS.">
+          <button class="project__zoom" type="button" data-group="spreads" aria-haspopup="dialog" aria-label="Open larger preview. Magazine spread about the Porsche 911 GT3 RS.">
             <img class="project__image" src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy" decoding="async">
           </button>
         </article>
@@ -182,10 +182,35 @@
             </h3>
             <p class="project__date">June 2026</p>
           </header>
-          <button class="project__zoom" type="button" popovertarget="preview-7" aria-label="Open larger preview. Magazine spread about the Aston Martin Valkyrie.">
+          <button class="project__zoom" type="button" data-group="spreads" aria-haspopup="dialog" aria-label="Open larger preview. Magazine spread about the Aston Martin Valkyrie.">
             <img class="project__image" src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy" decoding="async">
           </button>
         </article>
+      </div>
+
+      <!-- Project descriptions, shown beside the image in the larger preview.
+           One block per group. Every image whose button carries the same
+           data-group shares the block, and the preview lets the visitor
+           step between those images. To change a description, edit the
+           text between <p> and </p>; add another <p>...</p> for a new
+           paragraph. -->
+      <div id="project-notes" hidden>
+        <!-- Discord: the three Wumpus posters -->
+        <div data-group="wumpus">
+          <p>Placeholder description for the Discord Wumpus posters. All three posters share this text. Two or three sentences go here: what the brief was, one decision you made and why, and the tools you used.</p>
+        </div>
+        <!-- On: Cloudrunner 3 ad -->
+        <div data-group="on">
+          <p>Placeholder description for the On Cloudrunner 3 ad. This text belongs to this ad only. Two or three sentences go here: what the brief was, one decision you made and why, and the tools you used.</p>
+        </div>
+        <!-- Dbrand: White Damascus ad -->
+        <div data-group="dbrand">
+          <p>Placeholder description for the Dbrand White Damascus ad. This text belongs to this ad only. Two or three sentences go here: what the brief was, one decision you made and why, and the tools you used.</p>
+        </div>
+        <!-- Magazine spreads: Porsche and Aston Martin -->
+        <div data-group="spreads">
+          <p>Placeholder description for the magazine spreads. The Porsche and Aston Martin spreads share this text. Two or three sentences go here: what the brief was, one decision you made and why, and the tools you used.</p>
+        </div>
       </div>
     </section>
 
@@ -212,50 +237,36 @@
 
   </main>
 
-  <!-- Larger previews. Each one opens when its project image is clicked,
-       and closes on a click, a tap outside it, or the Esc key. -->
-  <div class="preview" id="preview-1" popover>
-    <button class="preview__close" type="button" popovertarget="preview-1" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-discord-wumpus.webp" alt="Discord poster: Wumpus is back!" width="900" height="1254" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-2" popover>
-    <button class="preview__close" type="button" popovertarget="preview-2" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-discord-wumpus-2.webp" alt="Discord poster: Wumpus is now back for order!" width="901" height="1064" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-3" popover>
-    <button class="preview__close" type="button" popovertarget="preview-3" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-discord-wumpus-3.webp" alt="Discord poster: Wumpus is back! repeated down a purple background." width="900" height="1254" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-4" popover>
-    <button class="preview__close" type="button" popovertarget="preview-4" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-on-cloudrunner.webp" alt="On Cloudrunner 3 ad: stability that keeps you running." width="1882" height="2000" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-5" popover>
-    <button class="preview__close" type="button" popovertarget="preview-5" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-dbrand-white-damascus.webp" alt="Dbrand ad introducing the White Damascus MacBook skin." width="2000" height="1704" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-6" popover>
-    <button class="preview__close" type="button" popovertarget="preview-6" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-porsche-gt3rs-spread.webp" alt="Magazine spread about the Porsche 911 GT3 RS." width="2000" height="1294" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
-  <div class="preview" id="preview-7" popover>
-    <button class="preview__close" type="button" popovertarget="preview-7" popovertargetaction="hide" aria-label="Close preview">
-      <img src="assets/project-aston-martin-valkyrie-spread.webp" alt="Magazine spread about the Aston Martin Valkyrie." width="2000" height="1294" loading="lazy">
-      <span class="preview__hint" aria-hidden="true">Close ✕</span>
-    </button>
-  </div>
+  <!-- Larger preview. One window serves every project image: the script
+       at the bottom fills in the image that was clicked, its label, and
+       its group's text from "Project descriptions" above. It closes on
+       the Close button, a click on the dark area, or the Esc key. -->
+  <dialog class="preview" id="preview" aria-labelledby="preview-title">
+    <button class="preview__close" type="button">Close ✕</button>
+    <div class="preview__layout">
+      <div class="preview__stage">
+        <img class="preview__image" alt="">
+      </div>
+      <div class="preview__info">
+        <header>
+          <h2 class="preview__title" id="preview-title">
+            <span class="preview__client"></span>
+            <span class="preview__name"></span>
+            <span class="preview__type"></span>
+          </h2>
+          <p class="preview__date"></p>
+        </header>
+        <img class="preview__rule" src="assets/divider.svg" alt="">
+        <div class="preview__text"></div>
+        <!-- Shown only when the group has more than one image. -->
+        <div class="preview__nav">
+          <button class="preview__step" type="button" data-step="-1">← Previous</button>
+          <span class="preview__count" aria-live="polite"></span>
+          <button class="preview__step" type="button" data-step="1">Next →</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <!-- Kept in the page, not in a separate file, so the reveal can hide the
        Projects section before the browser first draws it. -->
@@ -339,6 +350,107 @@
           function () { show('Copy failed'); }
         );
       });
+    })();
+
+    // Image preview: a click on a project image opens the preview window
+    // with that image, its label and its group's description. Images that
+    // share a data-group can be stepped through with Previous and Next,
+    // the arrow keys, or a swipe.
+    (function () {
+      var dialog = document.getElementById('preview');
+      var notes = document.getElementById('project-notes');
+      if (!dialog || !dialog.showModal) return;
+
+      function part(name) { return dialog.querySelector('.preview__' + name); }
+      var image = part('image');
+      var stage = part('stage');
+      var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Collect the images into their groups, in page order.
+      var groups = {};
+      Array.prototype.forEach.call(document.querySelectorAll('.project__zoom[data-group]'), function (button) {
+        var name = button.getAttribute('data-group');
+        var picture = button.querySelector('img');
+        var project = button.closest('.project');
+        function label(selector) { return project.querySelector(selector).textContent; }
+
+        var list = groups[name] = groups[name] || [];
+        var index = list.length;
+        list.push({
+          src: picture.getAttribute('src'),
+          alt: picture.getAttribute('alt'),
+          client: label('.project__client'),
+          name: label('.project__name'),
+          type: label('.project__type'),
+          date: label('.project__date')
+        });
+        button.addEventListener('click', function () { open(name, index); });
+      });
+
+      var items = [];
+      var current = 0;
+
+      function open(name, index) {
+        items = groups[name];
+        dialog.classList.toggle('preview--single', items.length < 2);
+
+        var text = notes && notes.querySelector('[data-group="' + name + '"]');
+        part('text').innerHTML = text ? text.innerHTML : '';
+
+        // Fetch the rest of the group now, so Next is instant.
+        items.forEach(function (item) { new Image().src = item.src; });
+
+        show(index, true);
+        dialog.showModal();
+        part('info').scrollTop = 0;
+        part('layout').scrollTop = 0;
+      }
+
+      // Stepping past either end wraps round to the other.
+      function show(index, instant) {
+        current = (index + items.length) % items.length;
+        var item = items[current];
+
+        image.src = item.src;
+        image.alt = item.alt;
+        if (!instant && !calm && image.animate) {
+          image.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+        }
+
+        part('client').textContent = item.client;
+        part('name').textContent = item.name;
+        part('type').textContent = item.type;
+        part('date').textContent = item.date;
+        part('count').textContent = (current + 1) + ' / ' + items.length;
+      }
+
+      dialog.addEventListener('click', function (event) {
+        var step = event.target.closest('[data-step]');
+        if (step) {
+          show(current + Number(step.getAttribute('data-step')));
+          return;
+        }
+        // Anything that is not the image or the panel closes the preview:
+        // the Close button and the dark area around the image.
+        if (!event.target.closest('.preview__image, .preview__info')) dialog.close();
+      });
+
+      dialog.addEventListener('keydown', function (event) {
+        if (items.length < 2) return;
+        if (event.key === 'ArrowRight') show(current + 1);
+        if (event.key === 'ArrowLeft') show(current - 1);
+      });
+
+      var touchX = null;
+      stage.addEventListener('touchstart', function (event) {
+        touchX = event.touches[0].clientX;
+      }, { passive: true });
+      stage.addEventListener('touchend', function (event) {
+        if (touchX === null || items.length < 2) return;
+        var moved = event.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(moved) > 40) show(current + (moved < 0 ? 1 : -1));
+      }, { passive: true });
     })();
   </script>
 </body>
