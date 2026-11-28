@@ -50,7 +50,7 @@
 
   <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
        fetch the new stylesheet instead of reusing a saved copy. -->
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <main class="page">
@@ -244,8 +244,15 @@
   <dialog class="preview" id="preview" aria-labelledby="preview-title">
     <button class="preview__close" type="button">Close ✕</button>
     <div class="preview__layout">
+      <!-- The arrows and the "1 / 3" count show only when the group has
+           more than one image. -->
       <div class="preview__stage">
-        <img class="preview__image" alt="">
+        <button class="preview__arrow" type="button" data-step="-1" aria-label="Previous image">←</button>
+        <div class="preview__frame">
+          <img class="preview__image" alt="">
+        </div>
+        <button class="preview__arrow" type="button" data-step="1" aria-label="Next image">→</button>
+        <span class="preview__count" aria-live="polite"></span>
       </div>
       <div class="preview__info">
         <header>
@@ -258,12 +265,6 @@
         </header>
         <img class="preview__rule" src="assets/divider.svg" alt="">
         <div class="preview__text"></div>
-        <!-- Shown only when the group has more than one image. -->
-        <div class="preview__nav">
-          <button class="preview__step" type="button" data-step="-1">← Previous</button>
-          <span class="preview__count" aria-live="polite"></span>
-          <button class="preview__step" type="button" data-step="1">Next →</button>
-        </div>
       </div>
     </div>
   </dialog>
@@ -354,8 +355,8 @@
 
     // Image preview: a click on a project image opens the preview window
     // with that image, its label and its group's description. Images that
-    // share a data-group can be stepped through with Previous and Next,
-    // the arrow keys, or a swipe.
+    // share a data-group can be stepped through with the arrows beside the
+    // image, the arrow keys, or a swipe.
     (function () {
       var dialog = document.getElementById('preview');
       var notes = document.getElementById('project-notes');
@@ -379,6 +380,7 @@
         list.push({
           src: picture.getAttribute('src'),
           alt: picture.getAttribute('alt'),
+          ratio: picture.getAttribute('width') / picture.getAttribute('height'),
           client: label('.project__client'),
           name: label('.project__name'),
           type: label('.project__type'),
@@ -393,6 +395,12 @@
       function open(name, index) {
         items = groups[name];
         dialog.classList.toggle('preview--single', items.length < 2);
+
+        // Size the image's frame for the widest and the tallest image in
+        // the group, so the arrows stay put while stepping through.
+        var ratios = items.map(function (item) { return item.ratio; });
+        dialog.style.setProperty('--wide', Math.max.apply(null, ratios).toFixed(4));
+        dialog.style.setProperty('--tall', Math.min.apply(null, ratios).toFixed(4));
 
         var text = notes && notes.querySelector('[data-group="' + name + '"]');
         part('text').innerHTML = text ? text.innerHTML : '';
