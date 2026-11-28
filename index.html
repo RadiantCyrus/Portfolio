@@ -50,7 +50,7 @@
 
   <!-- Raise the ?v= number by one whenever styles.css changes, so browsers
        fetch the new stylesheet instead of reusing a saved copy. -->
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <main class="page">
@@ -513,7 +513,7 @@
 
       // Where the large image has to start (or end) to sit exactly on the
       // small one on the page. Measured from the small image's button,
-      // because the image itself may be tilted by the pointer.
+      // which has the same box as the image.
       function flight(thumb) {
         var from = thumb.parentNode.getBoundingClientRect();
         var to = image.getBoundingClientRect();
