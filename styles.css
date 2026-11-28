@@ -128,12 +128,9 @@ a:focus-visible {
   transform: rotate(0.14deg);
 }
 
-.divider--after-experience {
-  margin-top: 26px;
-}
-
+.divider--after-education,
 .divider--after-projects {
-  margin-top: 29px;
+  margin-top: 40px;
 }
 
 /* ---------- About ---------- */
@@ -234,10 +231,21 @@ a:focus-visible {
   white-space: nowrap;
 }
 
+/* ---------- Education ----------
+   Uses the same .entry rows as Experience. */
+
+.education {
+  margin-top: 40px;
+}
+
+.entry + .entry {
+  margin-top: 20px;
+}
+
 /* ---------- Projects ---------- */
 
 .projects {
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
 /* Rows of projects, and the row of images inside a series.
@@ -659,7 +667,7 @@ html:has(.preview[open]) {
 /* ---------- Contact ---------- */
 
 .contact {
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
 .contact__details {
@@ -703,7 +711,7 @@ html:has(.preview[open]) {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 32px;
-  margin-top: 72px;
+  margin-top: 40px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
