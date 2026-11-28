@@ -328,7 +328,7 @@ a:focus-visible {
 /* ---------- Image preview ----------
    One window (a <dialog>) for every project image: the image on the left,
    with an arrow either side when there are more to step through, and a
-   panel on the right with its label, date and description. The
+   card on the right with its label, date and description. The
    script at the bottom of index.html fills it in and opens it; the
    browser handles the Esc key and keeping focus inside. */
 
@@ -356,9 +356,10 @@ html:has(.preview[open]) {
   overflow: hidden;
 }
 
+/* Right column: the 380px card plus its 24px gap from the screen edge. */
 .preview__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
+  grid-template-columns: minmax(0, 1fr) 404px;
   height: 100%;
 }
 
@@ -421,11 +422,19 @@ html:has(.preview[open]) {
   display: none;
 }
 
+/* The description card. It is only as tall as its text and sits level
+   with the middle of the image. If the text is ever taller than the
+   screen, the card stops short of the Close button and scrolls inside. */
 .preview__info {
+  align-self: center;
   display: flex;
   flex-direction: column;
   gap: 22px;
-  padding: 76px 36px 32px; /* the top clears the Close button */
+  max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
+  margin-right: 24px;
+  padding: 32px 36px 36px;
+  border-radius: 29px;
   background: var(--bg);
   overflow-y: auto;
 }
@@ -510,7 +519,7 @@ html:has(.preview[open]) {
   outline-offset: 3px;
 }
 
-/* Narrow windows and phones: the panel moves under the image, the whole
+/* Narrow windows and phones: the card moves under the image, the whole
    preview scrolls, and the arrows sit in a row right below the image
    with the count between them. */
 @media (max-width: 900px) {
@@ -556,9 +565,11 @@ html:has(.preview[open]) {
   }
 
   .preview__info {
-    flex: 1 0 auto;
+    flex: none;
     gap: 16px;
-    padding: 20px 20px 28px;
+    max-height: none;
+    margin: 4px 16px 24px;
+    padding: 24px 20px 26px;
     overflow: visible;
   }
 
